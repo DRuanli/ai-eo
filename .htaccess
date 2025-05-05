@@ -1,0 +1,21 @@
+# Root .htaccess file
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule (.*) public/$1 [L]
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect important files
+<FilesMatch "^(\.htaccess|\.gitignore|composer\.json|composer\.lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect application directories
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^app/.* index.php [L,NC]
+</IfModule>
